@@ -72,14 +72,14 @@ class SlidePuzzleGUI extends JFrame {
         puzzleButtons[3][3].setText(""); // [3][3] är det sista "elementet" eller vad man säger i arrayen och skulle egentligen ha namnet 16 men iom att knapparna ska vara 1-15 så tar jag knapp 16 och döper om den till ingenting. Därav är den tom
         puzzleButtons[3][3].setBackground(Color.WHITE); // gör knappen helt rosa
         puzzleButtons[3][3].setOpaque(true); // gör så att färgerna funkar typ..
-        Shuffle(puzzleButtons);
+        shuffle(puzzleButtons);
 
         pack(); // packar allt
 
 
     }
 
-    private void Shuffle(JButton[][] puzzleButtons) { // bröt ut koden i ShuffleForNewGame och skapade en egen metod för att shuffla. Den implementerades på rad 75 och 114
+    private void shuffle(JButton[][] puzzleButtons) { // bröt ut koden i ShuffleForNewGame och skapade en egen metod för att shuffla. Den implementerades på rad 75 och 114
         Random random = new Random(); // kolla om fredrik kan förklara det som står här under jag hittade en shuffle algoritm online och sigrun förklarade hur den funkade men jag greppar det inte helt dock funkar det! trycker man på Shuffle knappen när programmet körs blandas siffrorna om
 
         for (int i = puzzleButtons.length - 1; i > 0; i--) {
@@ -111,7 +111,7 @@ class SlidePuzzleGUI extends JFrame {
     ActionListener shuffleForNewGame = new ActionListener() { // lyssnare för newGame - ska shuffla spelknapparna
         @Override
         public void actionPerformed(ActionEvent e) {
-            Shuffle(puzzleButtons);
+            shuffle(puzzleButtons);
 
         }
     };
