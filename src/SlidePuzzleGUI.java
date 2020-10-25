@@ -1,7 +1,9 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.*;
 
 class SlidePuzzleGUI extends JFrame {
@@ -40,11 +42,11 @@ class SlidePuzzleGUI extends JFrame {
         add(controlPanel); // skapa / adda Controlpanel i konstruktorn
         setSize(500, 500); // sätter storleken på fönstret
         newGame.addActionListener(shuffleForNewGame); // lägger till en actionListener på knappen newGame - shuffleForNewGame så att alla siffror blandas
-        //solveGame.addActionListener(); // ingen metod klar än för denna actionListener
+        solveGame.addActionListener(solvePuzzle); // ingen metod klar än för denna actionListener
 
         setVisible(true); // sätter GUIn som synlig
 
-        for (int i = 0; i < puzzleButtons.length; i++)  //dessa loopar körs för att skapa upp spelknapparna, finns beskrivet hur man gör i boken på sid 350 tror jag
+        for (int i = 0; i < puzzleButtons.length; i++)
             for (int j = 0; j < puzzleButtons[i].length; j++) {
                 // Update: Store button in local variable, and set all configuration before setting it to the matrix
                 JButton button = new JButton("" + counter++); // här används counter så varje ruta får texten av vad counter++ har för värde tex 1,2,3. counter loopas tills den blir 16 iom vi loopas längden på arrayen (har längden 4*4)
@@ -100,10 +102,6 @@ class SlidePuzzleGUI extends JFrame {
 
     };
 
-    public static void main(String[] args) {
-        new SlidePuzzleGUI(); // kör programmet
-    }
-
     class TileActionListener implements ActionListener {
 
         private final int row;
@@ -150,7 +148,52 @@ class SlidePuzzleGUI extends JFrame {
 
         emptyRow = tileRow;
         emptyColumn = tileColumn;
+
+        int[] arr = new int[15];
+        int counter2=0;
+
+        var comps = puzzleGraphics.getComponents();
+        for (int i=0; i<comps.length; i++){
+            var btn = (JButton)comps[i];
+            if (btn.getText() != "" && btn.getText() !="0"){
+                arr[counter2++] = Integer.parseInt(btn.getText());
+            }
+        }
+        int s = arraySorterOrNot(arr,arr.length);
+
+        if (s !=0){
+            System.out.println("Grattiz!");
+        }
     }
+
+    private int arraySorterOrNot(int[] arr, int n)
+    {
+
+        if(n ==1 || n ==0)
+            return 1;
+        if(arr[n-1]<arr[n-2])
+            return 0;
+
+
+        return arraySorterOrNot(arr, n-1);
+
+    }
+    ActionListener solvePuzzle = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            counter=1;
+            for (int i = 0; i < puzzleButtons.length; i++)
+                for (int j = 0; j < puzzleButtons[i].length; j++) {
+                    puzzleButtons[i][j].setText(""+ counter++);
+                }
+            puzzleButtons[3][3].setText("");
+
+        }
+    };
+    public static void main(String[] args) {
+        new SlidePuzzleGUI(); // kör programmet
+    }
+
 
 }
 
