@@ -72,41 +72,50 @@ class SlidePuzzleGUI extends JFrame {
         puzzleButtons[3][3].setText(""); // [3][3] är det sista "elementet" eller vad man säger i arrayen och skulle egentligen ha namnet 16 men iom att knapparna ska vara 1-15 så tar jag knapp 16 och döper om den till ingenting. Därav är den tom
         puzzleButtons[3][3].setBackground(Color.WHITE); // gör knappen helt rosa
         puzzleButtons[3][3].setOpaque(true); // gör så att färgerna funkar typ..
+        Shuffle(puzzleButtons);
 
         pack(); // packar allt
 
 
     }
+
+    private void Shuffle(JButton[][] puzzleButtons) { // bröt ut koden i ShuffleForNewGame och skapade en egen metod för att shuffla. Den implementerades på rad 75 och 114
+        Random random = new Random(); // kolla om fredrik kan förklara det som står här under jag hittade en shuffle algoritm online och sigrun förklarade hur den funkade men jag greppar det inte helt dock funkar det! trycker man på Shuffle knappen när programmet körs blandas siffrorna om
+
+        for (int i = puzzleButtons.length - 1; i > 0; i--) {
+            for (int j = puzzleButtons[i].length - 1; j > 0; j--) {
+                if (i == 3 && j == 3) {
+                    continue;
+                }
+                int m = random.nextInt(i + 1);
+                int n = random.nextInt(j + 1);
+
+                String temp = puzzleButtons[i][j].getText();
+                puzzleButtons[i][j].setText(puzzleButtons[m][n].getText());
+                puzzleButtons[m][n].setText(temp);
+
+                if (puzzleButtons[i][j].getText().equals("")) {
+                    emptyRow = i;
+                    emptyColumn = j;
+                } else if (temp.equals("")) {
+                    emptyRow = m;
+                    emptyColumn = n;
+                }
+            }
+        }
+
+       // System.out.println("Empty: [" + emptyRow + "][" + emptyColumn + "]");
+
+    }
+
     ActionListener shuffleForNewGame = new ActionListener() { // lyssnare för newGame - ska shuffla spelknapparna
         @Override
         public void actionPerformed(ActionEvent e) {
-            Random random = new Random(); // kolla om fredrik kan förklara det som står här under jag hittade en shuffle algoritm online och sigrun förklarade hur den funkade men jag greppar det inte helt dock funkar det! trycker man på Shuffle knappen när programmet körs blandas siffrorna om
+            Shuffle(puzzleButtons);
 
-            for (int i = puzzleButtons.length - 1; i > 0; i--) {
-                for (int j = puzzleButtons[i].length - 1; j > 0; j--) {
-                    if (i == 3 && j == 3) {
-                        continue;
-                    }
-                    int m = random.nextInt(i + 1);
-                    int n = random.nextInt(j + 1);
-
-                    String temp = puzzleButtons[i][j].getText();
-                    puzzleButtons[i][j].setText(puzzleButtons[m][n].getText());
-                    puzzleButtons[m][n].setText(temp);
-
-                    if (puzzleButtons[i][j].getText().equals("")) {
-                        emptyRow = i;
-                        emptyColumn = j;
-                    } else if (temp.equals("")) {
-                        emptyRow = m;
-                        emptyColumn = n;
-                    }
-                }
-            }
-
-            System.out.println("Empty: [" + emptyRow + "][" + emptyColumn + "]");
         }
     };
+
 
 
     public static void main(String[] args) {
