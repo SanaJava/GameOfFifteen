@@ -58,6 +58,8 @@ class SlidePuzzleGUI extends JFrame {
                 button.setForeground(Color.BLACK); // sätter vit färg på texten på knapparna
                 button.setFont(fontSize); // sätter storlek på siffrorna i knapparna
                 button.setBackground(Color.GRAY); // bakgrundsfärg på knapparna blir rosa
+
+                button.addActionListener(new TileActionListener(i, j));
                 puzzleGraphics.add(button);
                 puzzleButtons[i][j] = button;
 
@@ -111,6 +113,22 @@ class SlidePuzzleGUI extends JFrame {
 
     public static void main(String[] args) {
         new SlidePuzzleGUI(); // kör programmet
+    }
+
+    class TileActionListener implements ActionListener {
+
+        private int row;
+        private int column;
+
+        TileActionListener(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Tile: [" + row + "][" + column + "] clicked");
+        }
     }
 
 }
