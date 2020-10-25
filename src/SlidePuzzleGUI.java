@@ -17,7 +17,7 @@ class SlidePuzzleGUI extends JFrame {
     JButton solveGame = new JButton("Solve Game"); // lösa spelet
     JButton[][] puzzleButtons = new JButton[4][4]; // multidimisionell array med fyra rader och fyra columner
 
-    Font fontSize = new Font("Tahoma", Font.BOLD, 60); // storleken på texten på spelknapparna
+    Font fontSize = new Font("Chalkduster", Font.BOLD, 60); // storleken på texten på spelknapparna
     int counter =1; // en räknare som används vid "instansieringen" av puzzleButtons
     int emptyRow = 3;
     int emptyColumn = 3;
@@ -40,6 +40,7 @@ class SlidePuzzleGUI extends JFrame {
         buttonPanel.add(solveGame); // solveGame knappen adderas till buttonPanel
         controlPanel.add(buttonPanel, BorderLayout.NORTH); // sätter ButtonPanel högst upp i controlPanel
         controlPanel.add(puzzleGraphics,BorderLayout.CENTER); // sätter puzzleGraphics panelen i mitten på controlPanel
+        setTitle("\u00A9 All rights reserved, made by Santana-Boukchana productions");
         setDefaultCloseOperation(EXIT_ON_CLOSE); // exit på kryss
         add(controlPanel); // skapa / adda Controlpanel i konstruktorn
         setSize(500,500); // sätter storleken på fönstret
@@ -54,9 +55,9 @@ class SlidePuzzleGUI extends JFrame {
                 // Update: Store button in local variable, and set all configuration before setting it to the matrix
                 JButton button = new JButton("" + counter++); // här används counter så varje ruta får texten av vad counter++ har för värde tex 1,2,3. counter loopas tills den blir 16 iom vi loopas längden på arrayen (har längden 4*4)
                 //button.addActionListener(); // här kan vi adda actionlisteners till alla knappar men har kommenterat ut detta då jag inte vet hur metoden för "flytta knapp" ska funka
-                button.setForeground(Color.WHITE); // sätter vit färg på texten på knapparna
+                button.setForeground(Color.BLACK); // sätter vit färg på texten på knapparna
                 button.setFont(fontSize); // sätter storlek på siffrorna i knapparna
-                button.setBackground(Color.PINK); // bakgrundsfärg på knapparna blir rosa
+                button.setBackground(Color.GRAY); // bakgrundsfärg på knapparna blir rosa
                 puzzleGraphics.add(button);
                 puzzleButtons[i][j] = button;
 
@@ -69,7 +70,7 @@ class SlidePuzzleGUI extends JFrame {
 
             }
         puzzleButtons[3][3].setText(""); // [3][3] är det sista "elementet" eller vad man säger i arrayen och skulle egentligen ha namnet 16 men iom att knapparna ska vara 1-15 så tar jag knapp 16 och döper om den till ingenting. Därav är den tom
-        puzzleButtons[3][3].setBackground(Color.PINK); // gör knappen helt rosa
+        puzzleButtons[3][3].setBackground(Color.WHITE); // gör knappen helt rosa
         puzzleButtons[3][3].setOpaque(true); // gör så att färgerna funkar typ..
 
         pack(); // packar allt
@@ -83,6 +84,9 @@ class SlidePuzzleGUI extends JFrame {
 
             for (int i = puzzleButtons.length - 1; i > 0; i--) {
                 for (int j = puzzleButtons[i].length - 1; j > 0; j--) {
+                    if (i == 3 && j == 3) {
+                        continue;
+                    }
                     int m = random.nextInt(i + 1);
                     int n = random.nextInt(j + 1);
 
