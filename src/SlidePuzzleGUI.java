@@ -183,8 +183,13 @@ class SlidePuzzleGUI extends JFrame {
             for (int i = 0; i < puzzleButtons.length; i++)
                 for (int j = 0; j < puzzleButtons[i].length; j++) {
                     puzzleButtons[i][j].setText(""+ counter++);
+                    puzzleButtons[i][j].setBackground(Color.LIGHT_GRAY);
                 }
+
+            puzzleButtons[3][3].setBackground(Color.WHITE);
             puzzleButtons[3][3].setText("");
+            moveTile(3,3);
+
 
         }
     };
