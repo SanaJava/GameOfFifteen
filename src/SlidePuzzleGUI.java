@@ -150,46 +150,67 @@ class SlidePuzzleGUI extends JFrame {
         emptyColumn = tileColumn;
 
         int[] arr = new int[15];
-        int counter2=0;
+        int counter2 = 0;
 
         var comps = puzzleGraphics.getComponents();
-        for (int i=0; i<comps.length; i++){
-            var btn = (JButton)comps[i];
-            if (btn.getText() != "" && btn.getText() !="0"){
+        for (int i = 0; i < comps.length; i++) {
+            var btn = (JButton) comps[i];
+            if (btn.getText() != "" && btn.getText() != "0") {
                 arr[counter2++] = Integer.parseInt(btn.getText());
             }
         }
-        int s = arraySorterOrNot(arr,arr.length);
+        int s = arraySorterOrNot(arr, arr.length);
 
-        if (s !=0){
-            System.out.println("Grattiz!");
+        if (s != 0) {
+
+        }
+
+        if (isSolved()) {
+           JOptionPane.showMessageDialog(null,
+                    "CONGRATULATIONS",
+                    "You solved the game", JOptionPane.INFORMATION_MESSAGE);
+           System.exit(JOptionPane.OK_OPTION);
         }
     }
 
-    private int arraySorterOrNot(int[] arr, int n)
-    {
+    private boolean isSolved() {
+        for (int i = 0; i < puzzleButtons.length; i++) {
+            for (int j = 0; j < puzzleButtons[i].length; j++) {
+                String buttonText = puzzleButtons[i][j].getText();
+                if (!buttonText.isEmpty() && 4 * i + j + 1 != Integer.parseInt(buttonText)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-        if(n ==1 || n ==0)
+    private int arraySorterOrNot(int[] arr, int n) {
+
+        if (n == 1 || n == 0)
             return 1;
-        if(arr[n-1]<arr[n-2])
+        if (arr[n - 1] < arr[n - 2])
             return 0;
 
 
-        return arraySorterOrNot(arr, n-1);
+        return arraySorterOrNot(arr, n - 1);
 
     }
+
     ActionListener solvePuzzle = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            counter=1;
+            moveTile(3, 3);
+            counter = 1;
             for (int i = 0; i < puzzleButtons.length; i++)
                 for (int j = 0; j < puzzleButtons[i].length; j++) {
-                    puzzleButtons[i][j].setText(""+ counter++);
+                    puzzleButtons[i][j].setText("" + counter++);
                 }
             puzzleButtons[3][3].setText("");
-
+            moveTile(3, 3);
         }
     };
+
     public static void main(String[] args) {
         new SlidePuzzleGUI(); // kör programmet
     }
