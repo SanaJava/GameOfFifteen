@@ -140,25 +140,9 @@ class SlidePuzzleGUI extends JFrame {
         emptyRow = tileRow;
         emptyColumn = tileColumn;
 
-        int[] arr = new int[15];
-        int counter2 = 0;
-
-        var comps = puzzleGraphics.getComponents();
-        for (int i = 0; i < comps.length; i++) {
-            var btn = (JButton) comps[i];
-            if (btn.getText() != "" && btn.getText() != "0") {
-                arr[counter2++] = Integer.parseInt(btn.getText());
-            }
-        }
-        int s = arraySorterOrNot(arr, arr.length);
-
-        if (s != 0) {
-
-        }
-
         if (isSolved()) {
            JOptionPane.showMessageDialog(null,
-                    "CONGRATULATIONS",
+                    "CONGRATTIZ!",
                     "You solved the game", JOptionPane.INFORMATION_MESSAGE);
            System.exit(JOptionPane.OK_OPTION);
         }
@@ -174,18 +158,6 @@ class SlidePuzzleGUI extends JFrame {
             }
         }
         return true;
-    }
-
-    private int arraySorterOrNot(int[] arr, int n) {
-
-        if (n == 1 || n == 0)
-            return 1;
-        if (arr[n - 1] < arr[n - 2])
-            return 0;
-
-
-        return arraySorterOrNot(arr, n - 1);
-
     }
 
     ActionListener solvePuzzle = e -> {
