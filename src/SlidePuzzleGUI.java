@@ -90,13 +90,18 @@ class SlidePuzzleGUI extends JFrame {
                     emptyRow = m;
                     emptyColumn = n;
                 }
+
+
             }
         }
     }
 
     // lyssnare för newGame - ska shuffla spelknapparna
     ActionListener shuffleForNewGame = e -> {
-        moveTile(3, 3); // Reset empty tile to bottom right
+
+
+        if (!(emptyRow == 3 && emptyColumn == 3))
+            moveTile(3, 3); // Reset empty tile to bottom right
         shuffle(puzzleButtons);
 
     };
